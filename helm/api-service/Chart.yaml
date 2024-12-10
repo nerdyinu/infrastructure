@@ -1,0 +1,9 @@
+apiVersion: v2
+name: api-service
+description: A Helm chart for Rust API Service
+version: 0.1.0
+dependencies:
+  - name: postgresql
+    version: "12.x.x"
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
