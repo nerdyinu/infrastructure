@@ -110,7 +110,7 @@ NAME                          READY   AGE
 statefulset.apps/postgresql   1/1     21s
 ```
 
-[]("~/Pictures/Screenshots/리소스_상태.png")
+[]("./리소스_상태.png")
 
 ### 2. 헬스 체크 확인
 
@@ -119,7 +119,7 @@ statefulset.apps/postgresql   1/1     21s
 {"status":"healthy","timestamp":"2024-12-10T07:08:23.626882784+00:00"}
 ```
 
-[]("~/Pictures/Screenshots/헬스체크.png/")
+[]("./헬스체크.png/")
 
 ### 3. 데이터베이스 연결 확인
 
@@ -148,7 +148,7 @@ postgres=# \q
 
 ```
 
-[]("~/Pictures/Screenshots/db_connection.png")
+[]("./db_connection.png")
 
 ## 구축 완료 체크리스트
 
