@@ -6,7 +6,31 @@
 
 ## 인프라 아키텍처
 
-![인프라 구성도](https://placeholder.com/infrastructure.png)
+```mermaid
+graph TB
+    subgraph Kubernetes Cluster
+        subgraph Application Namespace
+            API[API Server<br/>:8080<br/>Rust + Axum]
+            DB[(PostgreSQL<br/>:5432)]
+            Secret[Secrets<br/>Database Credentials]
+            
+            API --> DB
+            API -.-> Secret
+            DB -.-> Secret
+        end
+        
+        subgraph Infrastructure Management
+            Terraform[Terraform<br/>Infrastructure]
+            Helm[Helm Charts<br/>Deployment]
+            
+            Terraform --> Secret
+            Helm --> API
+            Helm --> DB
+        end
+    end
+
+    Client[External Client] --> API
+```
 
 ### 주요 구성 요소
 
