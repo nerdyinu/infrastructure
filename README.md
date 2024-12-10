@@ -32,26 +32,26 @@ graph TB
     Client[External Client] --> API
 ```
 
-### 주요 구성 요소
+1. 핵심 구성요소
 
-1. Kubernetes 클러스터 (Minikube)
-   - 단일 노드 클러스터 환경 구성
-   - 네임스페이스를 통한 애플리케이션 격리
+### Kubernetes 환경 (Minikube)
 
-2. API 서버 (Rust)
-   - 상태 확인을 위한 헬스 체크 엔드포인트 구현
-   - 데이터베이스 CRUD 작업 구현
-   - 컨테이너 자원 관리 설정
-   - 안정성을 위한 라이브니스/레디니스 프로브 구성
+- 개발 및 테스트용 단일 노드 클러스터 구성
+- application 네임스페이스로 서비스 격리
 
-3. 데이터베이스 (PostgreSQL)
-   - 영구 볼륨을 통한 데이터 저장
-   - Helm 차트를 통한 배포
-   - 보안 인증 정보 설정
+### API 서버
 
-## 구현 세부 사항
+- 개발 언어: Rust (Axum 프레임워크)
+- 주요 기능: 상태 점검, DB CRUD 작업
+- 포트: 8080
 
-### 1. 기술 스택
+### 데이터베이스
+
+- PostgreSQL 17.2 사용
+- 데이터 영구 저장을 위한 PVC 구성
+- 포트: 5432
+
+### 2. 기술 스택
 
 - 컨테이너 오케스트레이션: Kubernetes (Minikube)
 - 인프라 프로비저닝: Terraform
@@ -59,7 +59,7 @@ graph TB
 - 데이터베이스: PostgreSQL
 - API 서버: Rust (Axum 프레임워크)
 
-### 2. 배포 프로세스
+### 3. 배포 프로세스
 
 ```bash
 # 1. Minikube 클러스터 시작
@@ -79,12 +79,11 @@ helm install postgresql bitnami/postgresql \
 helm install api-service ./api-service --namespace application
 ```
 
-### 3. 보안 구성
+### 4. 보안 구성
 
-- Kubernetes Secrets를 통한 데이터베이스 인증 정보 관리
-- 네임스페이스를 통한 네트워크 격리
-- 컨테이너 보안 컨텍스트 설정
-- 리소스 제한 및 요청 설정
+- DB 접속 정보는 Kubernetes Secret으로 관리
+- 네임스페이스 분리로 서비스 격리
+- 컨테이너 리소스 제한 설정
 
 ## 구축 결과 확인
 
@@ -154,41 +153,30 @@ postgres=# \q
 ## 구축 완료 체크리스트
 
 ✅ Kubernetes 클러스터 정상 동작
+
 ✅ PostgreSQL 데이터베이스 배포 및 접근 가능
+
 ✅ API 서버 동작 및 헬스 체크 정상
+
 ✅ CRUD 작업 구현 완료
+
 ✅ Infrastructure as Code 구현
+
 ✅ Helm 차트 배포 구성
+
 ✅ 보안 설정 완료
-
-## 스크린샷
-
-### 1. Kubernetes 대시보드
-
-[Kubernetes 대시보드 실행 화면]
-
-### 2. API 헬스 체크
-
-[API 헬스 체크 응답 화면]
-
-### 3. 데이터베이스 연결
-
-[데이터베이스 연결 로그 화면]
 
 ## 향후 개선 사항
 
-1. 모니터링 시스템 구축
-2. 백업 및 복구 전략 수립
-3. CI/CD 파이프라인 구축
+1. 모니터링 환경 구축
+
+- Prometheus + Grafana 도입 및 로그 수집 시스템 구축
+
+2. 운영 안정성 강화
+
+- 백업/복구 정책 수립
+- CI/CD 파이프라인 구축
 
 ## 결론
 
-요구사항에 맞춰 인프라 구축을 완료하였으며, 다음 사항들을 성공적으로 구현하였습니다:
-
-- Kubernetes 환경 구성 및 운영
-- Infrastructure as Code 적용
-- 컨테이너 오케스트레이션
-- 데이터베이스 통합
-- 애플리케이션 배포 전략
-
-시스템은 추가 모니터링 솔루션 구축 및 보안 강화와 같은 향후 확장에 대비하여 준비되어 있습니다.
+요구사항에 맞춰 API 서버와 DB를 Kubernetes 환경에서 성공적으로 구축했습니다. 코드 기반 인프라 관리로 유지보수가 용이하며, 향후 확장성을 고려한 구조로 설계했습니다.
