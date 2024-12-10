@@ -17,5 +17,5 @@ variable "postgres_db" {
 }
 variable "postgres_url" {
   type    = string
-  default = "postgre://postgres:32518458@postgresql.application.svc.cluster.local:5432/stclab"
+  default = "postgres://postgres:postgres@postgresql.application.svc.cluster.local:5432/stclab"
 }

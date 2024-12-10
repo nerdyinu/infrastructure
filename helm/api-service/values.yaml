@@ -32,7 +32,7 @@ probes:
     path: /health
 
 database:
-  host: postgresql
+  host: postgresql.application.svc.cluster.local 
   port: 5432
   name: stclab
   user: postgres
